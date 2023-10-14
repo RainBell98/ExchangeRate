@@ -113,6 +113,7 @@ const styles = {
 export const Mdata = () => {
   const today = new Date();
   const [optionData, setOptionData] = useState<any>([]);
+  const [preOptionData, setPreOptionData] = useState<any>([]);
   const [yesOptionData, setYesOptionData] = useState<any>([]);
   const [selectData, setSelectData] = useState<any>('');
   const [country, setCountry] = useState<any>('KRW');
@@ -127,22 +128,21 @@ export const Mdata = () => {
     month: today.getMonth() + 1,
     date: today.getDate() - 1,
   };
-  let preApi = `https://www.koreaexim.go.kr/site/program/financial/exchangeJSON`;
-  let yesApi = `https://www.koreaexim.go.kr/site/program/financial/exchangeJSON`;
-
+  let preApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=mPzV5oNcvO3wdColEQyOEyGyKEfZK0cw${today.getFullYear()}${
+    today.getMonth() + 1
+  }${today.getDate() - 4}&data=AP01`;
+  let yesApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=mPzV5oNcvO3wdColEQyOEyGyKEfZK0cw&searchdate=${yesterday.year}${yesterday.month}${yesterday.date}&data=AP01`;
+  console.log('asdf', preApi);
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(ap);
-      const preResult = await axios.get(preApi, {
-        params: {
-          authkey: 'mPzV5oNcvO3wdColEQyOEyGyKEfZK0cw',
-          data: 'AP01',
-        },
-      });
+      const preResult = await axios.get(preApi);
       console.log(preApi);
       console.log('pre', preResult);
       const res = await result.data.conversion_rates;
+      const preRes = await preResult.data;
       setOptionData(Object.entries(res));
+      setPreOptionData(preRes);
     };
 
     fetchData();
@@ -152,13 +152,11 @@ export const Mdata = () => {
       setSelectData(optionData[0][0] + ',' + optionData[0][1]);
       setBasic(countryInfo[optionData[0][0]]);
       const yesData = async () => {
-        const yesResult = await axios.get(preApi, {
-          params: {
-            authkey: 'mPzV5oNcvO3wdColEQyOEyGyKEfZK0cw',
-            searchdata: `${yesterday.year}`,
-            data: 'AP01',
-          },
-        });
+        const yesResult = await axios.get(yesApi);
+        console.log(yesResult);
+        console.log(yesApi);
+        const yesRes = await yesResult.data;
+        setYesOptionData(yesRes);
       };
       yesData();
     }
@@ -228,6 +226,30 @@ export const Mdata = () => {
         </select>
 
         <input type="text" id="korM" value={exMoney} style={styles.input} />
+      </div>
+      <div>
+        <h2>오늘</h2>
+        {preOptionData.map((value: any) => {
+          return (
+            <>
+              <span>
+                {value.cur_unit} {value.ttb}
+              </span>
+              <br />
+            </>
+          );
+        })}
+        <h2>어제</h2>
+        {yesOptionData.map((value: any) => {
+          return (
+            <>
+              <span>
+                {value.cur_unit} {value.ttb}
+              </span>
+              <br />
+            </>
+          );
+        })}
       </div>
     </>
   );
