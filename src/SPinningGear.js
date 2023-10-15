@@ -5,10 +5,13 @@ import './SpinningGear.css'; // 스타일링을 위한 CSS 파일
 class SpinningGear extends React.Component {
   render() {
     return (
-      <div className="gear-container">
-        <FaCog className="spinning-gear" size={100} />
-        <FaDollarSign className="dollar-icon" />
-      </div>
+      <>
+        <div className="gear-container">
+          <FaCog className="spinning-gear" size={100} />
+
+          <FaDollarSign className="dollar-icon" />
+        </div>
+      </>
     );
   }
 }

@@ -2,26 +2,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .spinning-gear {
   animation: spin 3s linear infinite;
 }
 
-.gear-icon,
+.gear-icon {
+  font-size: 50px;
+  color: blue;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
 .dollar-icon {
   position: absolute;
-  top: 27%;
-  left: 49.5%;
+  left: 50%;
+  top: 50%;
+  font-size: 30px;
   transform: translate(-50%, -50%);
-}
-
-.gear-icon {
-  font-size: 50px; /* 톱니바퀴 아이콘의 크기를 지정합니다. */
-}
-
-.dollar-icon {
-  font-size: 30px; /* $ 아이콘의 크기를 지정합니다. */
 }
 
 @keyframes spin {

@@ -128,10 +128,10 @@ export const Mdata = () => {
     month: today.getMonth() + 1,
     date: today.getDate() - 1,
   };
-  let preApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=mPzV5oNcvO3wdColEQyOEyGyKEfZK0cw${today.getFullYear()}${
+  let preApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${korea_key}${today.getFullYear()}${
     today.getMonth() + 1
   }${today.getDate() - 4}&data=AP01`;
-  let yesApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=mPzV5oNcvO3wdColEQyOEyGyKEfZK0cw&searchdate=${yesterday.year}${yesterday.month}${yesterday.date}&data=AP01`;
+  let yesApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${yesterday.year}${yesterday.month}${yesterday.date}&data=AP01`;
   console.log('asdf', preApi);
   useEffect(() => {
     const fetchData = async () => {
