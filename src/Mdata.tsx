@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.css';
 
 const service_key = process.env.REACT_APP_API_KEY;
-const korea_key = process.env.REACT_APP_KOREA_KEY;
+
 const countryInfo: any = {
   AED: '아랍에미리트 디르함',
 
@@ -111,10 +111,7 @@ const styles = {
 };
 
 export const Mdata = () => {
-  const today = new Date();
   const [optionData, setOptionData] = useState<any>([]);
-  const [preOptionData, setPreOptionData] = useState<any>([]);
-  const [yesOptionData, setYesOptionData] = useState<any>([]);
   const [selectData, setSelectData] = useState<any>('');
   const [country, setCountry] = useState<any>('KRW');
   const [money, setMoney] = useState<any>(0);
@@ -123,42 +120,19 @@ export const Mdata = () => {
   const [basic, setBasic] = useState('원');
   let [cnt, setCnt] = useState<number>(0);
   let ap = `https://v6.exchangerate-api.com/v6/${service_key}/latest/${country}`;
-  let yesterday = {
-    year: today.getFullYear(),
-    month: today.getMonth() + 1,
-    date: today.getDate() - 1,
-  };
-  let preApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${korea_key}${today.getFullYear()}${
-    today.getMonth() + 1
-  }${today.getDate() - 4}&data=AP01`;
-  let yesApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${yesterday.year}${yesterday.month}${yesterday.date}&data=AP01`;
-  console.log('asdf', preApi);
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(ap);
-      const preResult = await axios.get(preApi);
-      console.log(preApi);
-      console.log('pre', preResult);
       const res = await result.data.conversion_rates;
-      const preRes = await preResult.data;
       setOptionData(Object.entries(res));
-      setPreOptionData(preRes);
     };
-
     fetchData();
   }, [country]);
   useEffect(() => {
     if (cnt != 0) {
       setSelectData(optionData[0][0] + ',' + optionData[0][1]);
       setBasic(countryInfo[optionData[0][0]]);
-      const yesData = async () => {
-        const yesResult = await axios.get(yesApi);
-        console.log(yesResult);
-        console.log(yesApi);
-        const yesRes = await yesResult.data;
-        setYesOptionData(yesRes);
-      };
-      yesData();
     }
     setCnt(1);
   }, [optionData]);
@@ -178,7 +152,7 @@ export const Mdata = () => {
   };
   const exChange = (e: any) => {
     setMoney(e);
-    setExMoney(e * selectData.split(',')[1]);
+    setExMoney((e * selectData.split(',')[1]).toFixed(3));
   };
 
   return (
@@ -226,30 +200,6 @@ export const Mdata = () => {
         </select>
 
         <input type="text" id="korM" value={exMoney} style={styles.input} />
-      </div>
-      <div>
-        <h2>오늘</h2>
-        {preOptionData.map((value: any) => {
-          return (
-            <>
-              <span>
-                {value.cur_unit} {value.ttb}
-              </span>
-              <br />
-            </>
-          );
-        })}
-        <h2>어제</h2>
-        {yesOptionData.map((value: any) => {
-          return (
-            <>
-              <span>
-                {value.cur_unit} {value.ttb}
-              </span>
-              <br />
-            </>
-          );
-        })}
       </div>
     </>
   );

@@ -24,3 +24,7 @@
 #korM {
   text-align: right;
 }
+
+.compare {
+  display: flex;
+}
