@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect } from 'react';
+const chart_key = process.env.REACT_APP_CHART_KEY;
 const countryInfo: any = {
   AED: '아랍에미리트',
   AUD: '호주',
@@ -52,20 +53,13 @@ const countryInfo: any = {
   CNH: '중국(국외용)',
 };
 export const RateChart = () => {
-  let ap2016 =
-    'https://api.odcloud.kr/api/15014787/v1/uddi:6d6bcc0c-c7e8-44e0-95bc-fc248a09f661?page=1&perPage=56&serviceKey=QP9dWQKsd8YHB4YjutB2beVBN5GNXvV9bt4e2bRXWVZc1tMsLX%2BrBZRV%2BiL5iwFVDK8nl6PxFKEyqD8v8w9joQ%3D%3D';
-  let ap2017 =
-    'https://api.odcloud.kr/api/15014787/v1/uddi:6d6bcc0c-c7e8-44e0-95bc-fc248a09f661?page=248&perPage=56&serviceKey=QP9dWQKsd8YHB4YjutB2beVBN5GNXvV9bt4e2bRXWVZc1tMsLX%2BrBZRV%2BiL5iwFVDK8nl6PxFKEyqD8v8w9joQ%3D%3D';
-  let ap2018 =
-    'https://api.odcloud.kr/api/15014787/v1/uddi:4722e088-35b3-44cf-93cd-ff5ca01e4092?page=1&perPage=56&serviceKey=QP9dWQKsd8YHB4YjutB2beVBN5GNXvV9bt4e2bRXWVZc1tMsLX%2BrBZRV%2BiL5iwFVDK8nl6PxFKEyqD8v8w9joQ%3D%3D';
-  let ap2019 =
-    'https://api.odcloud.kr/api/15014787/v1/uddi:f6ec3062-8a05-4a1f-9389-fb60199d5d08?page=1&perPage=56&serviceKey=QP9dWQKsd8YHB4YjutB2beVBN5GNXvV9bt4e2bRXWVZc1tMsLX%2BrBZRV%2BiL5iwFVDK8nl6PxFKEyqD8v8w9joQ%3D%3D';
-  let ap2020 =
-    'https://api.odcloud.kr/api/15014787/v1/uddi:d33759c2-689d-4d80-a0ef-827c64c0de8c?page=1&perPage=56&serviceKey=QP9dWQKsd8YHB4YjutB2beVBN5GNXvV9bt4e2bRXWVZc1tMsLX%2BrBZRV%2BiL5iwFVDK8nl6PxFKEyqD8v8w9joQ%3D%3D';
-  let ap2021 =
-    'https://api.odcloud.kr/api/15014787/v1/uddi:7f57af11-77b2-48a0-8a08-c0b1bd1c0581?page=1&perPage=56&serviceKey=QP9dWQKsd8YHB4YjutB2beVBN5GNXvV9bt4e2bRXWVZc1tMsLX%2BrBZRV%2BiL5iwFVDK8nl6PxFKEyqD8v8w9joQ%3D%3D';
-  let ap2022 =
-    'https://api.odcloud.kr/api/15014787/v1/uddi:604b46a4-081e-4bb6-8fc4-92e7d51a0fd5?page=1&perPage=56&serviceKey=QP9dWQKsd8YHB4YjutB2beVBN5GNXvV9bt4e2bRXWVZc1tMsLX%2BrBZRV%2BiL5iwFVDK8nl6PxFKEyqD8v8w9joQ%3D%3D';
+  let ap2016 = `https://api.odcloud.kr/api/15014787/v1/uddi:6d6bcc0c-c7e8-44e0-95bc-fc248a09f661?page=1&perPage=56&serviceKey=${chart_key}`;
+  let ap2017 = `https://api.odcloud.kr/api/15014787/v1/uddi:6d6bcc0c-c7e8-44e0-95bc-fc248a09f661?page=248&perPage=56&serviceKey=${chart_key}`;
+  let ap2018 = `https://api.odcloud.kr/api/15014787/v1/uddi:4722e088-35b3-44cf-93cd-ff5ca01e4092?page=1&perPage=56&serviceKey=${chart_key}`;
+  let ap2019 = `https://api.odcloud.kr/api/15014787/v1/uddi:f6ec3062-8a05-4a1f-9389-fb60199d5d08?page=1&perPage=56&serviceKey=${chart_key}`;
+  let ap2020 = `https://api.odcloud.kr/api/15014787/v1/uddi:d33759c2-689d-4d80-a0ef-827c64c0de8c?page=1&perPage=56&serviceKey=${chart_key}`;
+  let ap2021 = `https://api.odcloud.kr/api/15014787/v1/uddi:7f57af11-77b2-48a0-8a08-c0b1bd1c0581?page=1&perPage=56&serviceKey=${chart_key}`;
+  let ap2022 = `https://api.odcloud.kr/api/15014787/v1/uddi:604b46a4-081e-4bb6-8fc4-92e7d51a0fd5?page=1&perPage=56&serviceKey=${chart_key}`;
   useEffect(() => {
     const chart = async () => {
       const res2016 = (await axios.get(ap2016)).data.data;
