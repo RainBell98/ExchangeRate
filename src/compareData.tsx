@@ -107,56 +107,54 @@ export const CompareData = () => {
 
   return (
     <div className="compare">
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>통화명</th>
-              <th>매매기준율</th>
-              <th>전일대비</th>
-              <th>등락률</th>
-            </tr>
-          </thead>
-          <tbody>
-            {preOptionData.map((value: any, idx: number) => {
-              return (
-                <tr>
-                  <th>
-                    {value.cur_unit} {countryInfo[value.cur_unit]}
-                  </th>
-                  <td>{value.tts}</td>
-                  {compare[idx] > 0 && (
-                    <td style={tdRColor}>
-                      <AiFillCaretUp />
-                      {compare[idx]}
-                    </td>
-                  )}
-                  {compare[idx] < 0 && (
-                    <td style={tdBColor}>
-                      <AiFillCaretDown></AiFillCaretDown>
-                      {compare[idx]}
-                    </td>
-                  )}
-                  {compare[idx] === 0 && <td>{compare[idx]}</td>}
-                  {rateData[idx] > 0 && (
-                    <td style={tdRColor}>
-                      <AiFillCaretUp />
-                      {rateData[idx]}%
-                    </td>
-                  )}
-                  {rateData[idx] < 0 && (
-                    <td style={tdBColor}>
-                      <AiFillCaretDown />
-                      {rateData[idx]}%
-                    </td>
-                  )}
-                  {!rateData[idx] && <td>0</td>}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th className="thead">통화명</th>
+            <th className="thead">매매기준율</th>
+            <th className="thead">전일대비</th>
+            <th className="thead">등락률</th>
+          </tr>
+        </thead>
+        <tbody>
+          {preOptionData.map((value: any, idx: number) => {
+            return (
+              <tr>
+                <th>
+                  {value.cur_unit} {countryInfo[value.cur_unit]}
+                </th>
+                <td>{value.tts}</td>
+                {compare[idx] > 0 && (
+                  <td style={tdRColor}>
+                    <AiFillCaretUp />
+                    {compare[idx]}
+                  </td>
+                )}
+                {compare[idx] < 0 && (
+                  <td style={tdBColor}>
+                    <AiFillCaretDown></AiFillCaretDown>
+                    {compare[idx]}
+                  </td>
+                )}
+                {compare[idx] === 0 && <td>{compare[idx]}</td>}
+                {rateData[idx] > 0 && (
+                  <td style={tdRColor}>
+                    <AiFillCaretUp />
+                    {rateData[idx]}%
+                  </td>
+                )}
+                {rateData[idx] < 0 && (
+                  <td style={tdBColor}>
+                    <AiFillCaretDown />
+                    {rateData[idx]}%
+                  </td>
+                )}
+                {!rateData[idx] && <td>0</td>}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };

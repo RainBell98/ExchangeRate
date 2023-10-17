@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import { RateChart } from './rateChart';
 
 const service_key = process.env.REACT_APP_API_KEY;
 
@@ -84,7 +85,7 @@ const styles = {
     margin: '10px',
   },
   select: {
-    width: '82px',
+    width: '81px',
     // minWidth: '115px',
     padding: '10px',
     borderRadius: '8px',
@@ -157,6 +158,9 @@ export const Mdata = () => {
 
   return (
     <>
+      <>
+        <RateChart country={selectData.split(',')[0]}></RateChart>
+      </>
       <div>
         <select style={styles.select} onChange={(e) => changeCountry(e.target.value)}>
           {optionData.map((value: any) => {
@@ -174,16 +178,19 @@ export const Mdata = () => {
 
         <input style={styles.input} type="text" id="korM" value={money} onChange={(e) => exChange(e.target.value)} />
       </div>
-      <span>
-        {money} {basic}
-      </span>
-      <br />
-      <span>=</span>
-      <br />
-      <span>
-        {exMoney} {unit}
-      </span>
-      <br />
+
+      <div>
+        <span>
+          {money} {basic}
+        </span>
+        <br />
+        <span>=</span>
+        <br />
+        <span>
+          {exMoney} {unit}
+        </span>
+        <br />
+      </div>
       <div>
         <select style={styles.select} onChange={(e) => selectFunc(e.target.value)}>
           {optionData.map((value: any) => {

@@ -13,9 +13,10 @@ function App() {
         <h2 className="h2">Main</h2>
         <SpinningGear></SpinningGear>
         <Mdata></Mdata>
-        <CompareData></CompareData>
+        <div className="compareBox">
+          <CompareData></CompareData>
+        </div>
       </div>
-      <RateChart></RateChart>
     </div>
   );
 }

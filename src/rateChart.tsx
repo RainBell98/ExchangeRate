@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useEffect } from 'react';
+import LineChart from './chart';
+
 const chart_key = process.env.REACT_APP_CHART_KEY;
 const countryInfo: any = {
   AED: '아랍에미리트',
@@ -19,10 +21,10 @@ const countryInfo: any = {
   HKD: '홍콩',
   HRK: '크로아티아',
   HUF: '헝가리',
-  'IDR(100)': '인도네시아',
+  IDR: '인도네시아',
   ILS: '이스라엘',
   INR: '인도',
-  'JPY(100)': '일본',
+  JPY: '일본',
   KRW: '대한민국',
   KZT: '카자흐스탄',
   MXN: '멕시코',
@@ -52,41 +54,60 @@ const countryInfo: any = {
   KWD: '쿠웨이트',
   CNH: '중국(국외용)',
 };
-export const RateChart = () => {
+const totalData: any = [{}];
+export const RateChart = (props: any) => {
   let ap2016 = `https://api.odcloud.kr/api/15014787/v1/uddi:6d6bcc0c-c7e8-44e0-95bc-fc248a09f661?page=1&perPage=56&serviceKey=${chart_key}`;
   let ap2017 = `https://api.odcloud.kr/api/15014787/v1/uddi:6d6bcc0c-c7e8-44e0-95bc-fc248a09f661?page=248&perPage=56&serviceKey=${chart_key}`;
   let ap2018 = `https://api.odcloud.kr/api/15014787/v1/uddi:4722e088-35b3-44cf-93cd-ff5ca01e4092?page=1&perPage=56&serviceKey=${chart_key}`;
-  let ap2019 = `https://api.odcloud.kr/api/15014787/v1/uddi:f6ec3062-8a05-4a1f-9389-fb60199d5d08?page=1&perPage=56&serviceKey=${chart_key}`;
-  let ap2020 = `https://api.odcloud.kr/api/15014787/v1/uddi:d33759c2-689d-4d80-a0ef-827c64c0de8c?page=1&perPage=56&serviceKey=${chart_key}`;
-  let ap2021 = `https://api.odcloud.kr/api/15014787/v1/uddi:7f57af11-77b2-48a0-8a08-c0b1bd1c0581?page=1&perPage=56&serviceKey=${chart_key}`;
-  let ap2022 = `https://api.odcloud.kr/api/15014787/v1/uddi:604b46a4-081e-4bb6-8fc4-92e7d51a0fd5?page=1&perPage=56&serviceKey=${chart_key}`;
+  let ap2019 = `https://api.odcloud.kr/api/15014787/v1/uddi:f6ec3062-8a05-4a1f-9389-fb60199d5d08?page=1&perPage=57&serviceKey=${chart_key}`;
+  let ap2020 = `https://api.odcloud.kr/api/15014787/v1/uddi:d33759c2-689d-4d80-a0ef-827c64c0de8c?page=1&perPage=57&serviceKey=${chart_key}`;
+  let ap2021 = `https://api.odcloud.kr/api/15014787/v1/uddi:7f57af11-77b2-48a0-8a08-c0b1bd1c0581?page=1&perPage=57&serviceKey=${chart_key}`;
+  let ap2022 = `https://api.odcloud.kr/api/15014787/v1/uddi:604b46a4-081e-4bb6-8fc4-92e7d51a0fd5?page=1&perPage=58&serviceKey=${chart_key}`;
+
   useEffect(() => {
     const chart = async () => {
-      const res2016 = (await axios.get(ap2016)).data.data;
-      const res2017 = (await axios.get(ap2017)).data.data;
-      const res2018 = (await axios.get(ap2018)).data.data;
-      const res2019 = (await axios.get(ap2019)).data.data;
-      const res2020 = (await axios.get(ap2020)).data.data;
-      const res2021 = (await axios.get(ap2021)).data.data;
-      const res2022 = (await axios.get(ap2022)).data.data;
+      let res2016 = (await axios.get(ap2016)).data.data;
+      let res2017 = (await axios.get(ap2017)).data.data;
+      let res2018 = (await axios.get(ap2018)).data.data;
+      let res2019 = (await axios.get(ap2019)).data.data;
+      let res2020 = (await axios.get(ap2020)).data.data;
+      let res2021 = (await axios.get(ap2021)).data.data;
+      let res2022 = (await axios.get(ap2022)).data.data;
+      function filterObjectsWithoutCountryInfo(arr: any[], countryInfo: any): any[] {
+        return arr.filter((item) => countryInfo[item.통화코드]);
+      }
+      res2016 = filterObjectsWithoutCountryInfo(res2016, countryInfo);
+      function getValuesByKey(arr: any[], key: string): any[] {
+        return arr.map((item) => item[key]);
+      }
 
-      const data2016 = {};
-      const data2017 = (await axios.get(ap2017)).data.data;
-      const data2018 = (await axios.get(ap2018)).data.data;
-      const data2019 = (await axios.get(ap2019)).data.data;
-      const data2020 = (await axios.get(ap2020)).data.data;
-      const data2021 = (await axios.get(ap2021)).data.data;
-      const data2022 = (await axios.get(ap2022)).data.data;
-      console.log(res2016);
-      //   console.log(res);
-      //   for (let i = 0; i < res2016.length; i++) {
-      //       if(countryInfo[res2016[i].통화코드]){
-      //         {res2016[i].통화코드}:
-      //       }
+      const resBasic = getValuesByKey(res2016, '통화코드');
+      res2019 = res2019.filter((item: any) => resBasic.includes(item.통화코드));
+      res2020 = res2020.filter((item: any) => resBasic.includes(item.통화코드));
+      res2021 = res2021.filter((item: any) => resBasic.includes(item.통화코드));
+      res2022 = res2022.filter((item: any) => resBasic.includes(item.통화코드));
+      res2017 = filterObjectsWithoutCountryInfo(res2016, countryInfo);
+      res2018 = filterObjectsWithoutCountryInfo(res2016, countryInfo);
+      const resData: any[] = [res2016, res2017, res2018, res2019, res2020, res2021, res2022];
 
-      //   }
+      for (let index = 0; index < resData[0].length; index++) {
+        totalData[resData[0][index].통화코드] = [];
+      }
+      for (let i = 0; i < resData.length; i++) {
+        for (let j = 0; j < 39; j++) {
+          totalData[resData[0][j].통화코드].push(resData[i][j].매매기준율);
+        }
+      }
     };
     chart();
-  }, []);
-  return <></>;
+  }, [props.country]);
+  const chartData = {
+    labels: [2016, 2017, 2018, 2019, 2020, 2021, 2022],
+    values: totalData[props.country],
+  };
+  return (
+    <>
+      <LineChart data={chartData}></LineChart>{' '}
+    </>
+  );
 };
