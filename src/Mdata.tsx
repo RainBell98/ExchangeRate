@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import { RateChart } from './rateChart';
 
 const service_key = process.env.REACT_APP_API_KEY;
+
 const countryInfo: any = {
   AED: '아랍에미리트 디르함',
 
@@ -76,68 +78,96 @@ const countryInfo: any = {
 
   ZAR: '남아프리카 랜드',
 };
+const styles = {
+  container: {
+    position: 'relative',
+    width: '200px',
+    margin: '10px',
+  },
+  select: {
+    width: '81px',
+    // minWidth: '115px',
+    padding: '10px',
+    borderRadius: '8px',
+    border: '2px solid #ccc',
+    outline: 'none',
+    fontSize: '16px',
+    backgroundColor: 'white',
+    backgroundImage: 'linear-gradient(to bottom, #ffffff, #f6f6f6)',
+    boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.1)',
+  },
+  option: {
+    backgroundColor: '#fff',
+    color: '#333',
+  },
+  input: {
+    padding: '10px',
+    borderRadius: '8px',
+    border: '2px solid #ccc',
+    outline: 'none',
+    fontSize: '16px',
+    backgroundColor: 'white',
+    width: '200px',
+  },
+};
 
 export const Mdata = () => {
   const [optionData, setOptionData] = useState<any>([]);
   const [selectData, setSelectData] = useState<any>('');
-  const [country, setCountry] = useState<any>('USD');
+  const [country, setCountry] = useState<any>('KRW');
   const [money, setMoney] = useState<any>(0);
   const [exMoney, setExMoney] = useState<any>(0);
+  const [unit, setUnit] = useState('KRW');
+  const [basic, setBasic] = useState('원');
   let [cnt, setCnt] = useState<number>(0);
-
   let ap = `https://v6.exchangerate-api.com/v6/${service_key}/latest/${country}`;
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(ap);
-
-      console.log(country);
-
-      // console.log(result);
       const res = await result.data.conversion_rates;
-
       setOptionData(Object.entries(res));
-      console.log('0');
     };
     fetchData();
   }, [country]);
   useEffect(() => {
     if (cnt != 0) {
       setSelectData(optionData[0][0] + ',' + optionData[0][1]);
+      setBasic(countryInfo[optionData[0][0]]);
     }
     setCnt(1);
   }, [optionData]);
+  useEffect(() => {
+    if (cnt != 0) {
+      setUnit(countryInfo[selectData.split(',')[0]]);
+    }
+  }, [selectData]);
 
   const changeCountry: any = (e: string) => {
-    setExMoney(money.toFixed(3));
-    // console.log(e.split(',')[0]);
+    setExMoney(Number(money).toFixed(3));
     setCountry(e.split(',')[0]);
-    // console.log(selectData);
   };
   const selectFunc = (e: any) => {
-    // console.log(+e.split(',')[1]);
-    // console.log(e);
     setSelectData(e);
     setExMoney((+e.split(',')[1] * money).toFixed(3));
-    // console.log(exMoney);
   };
   const exChange = (e: any) => {
     setMoney(e);
-    // console.log('a', selectData.split(',')[1]);
-    setExMoney(e * selectData.split(',')[1]);
+    setExMoney((e * selectData.split(',')[1]).toFixed(3));
   };
 
   return (
     <>
+      <>
+        <RateChart country={selectData.split(',')[0]}></RateChart>
+      </>
       <div>
-        <label>
-          <input type="text" id="korM" value={money} onChange={(e) => exChange(e.target.value)} />
-        </label>
-        <select key={Date.now()} onChange={(e) => changeCountry(e.target.value)}>
+        <select style={styles.select} onChange={(e) => changeCountry(e.target.value)}>
           {optionData.map((value: any) => {
             return (
               <>
                 {countryInfo[value[0]] && (
-                  <option key={Date.now()} value={value}>
+                  <option key={value} value={value} style={styles.option}>
                     {value[0]} {countryInfo[value[0]]}
                   </option>
                 )}
@@ -145,19 +175,29 @@ export const Mdata = () => {
             );
           })}
         </select>
+
+        <input style={styles.input} type="text" id="korM" value={money} onChange={(e) => exChange(e.target.value)} />
       </div>
 
-      <br />
       <div>
-        <label>
-          <input type="text" id="korM" value={exMoney} />
-        </label>
-        <select key={Date.now()} onChange={(e) => selectFunc(e.target.value)}>
+        <span>
+          {money} {basic}
+        </span>
+        <br />
+        <span>=</span>
+        <br />
+        <span>
+          {exMoney} {unit}
+        </span>
+        <br />
+      </div>
+      <div>
+        <select style={styles.select} onChange={(e) => selectFunc(e.target.value)}>
           {optionData.map((value: any) => {
             return (
               <>
                 {countryInfo[value[0]] && (
-                  <option key={Date.now()} value={value}>
+                  <option key={value} value={value} style={styles.option}>
                     {value[0]} {countryInfo[value[0]]}
                   </option>
                 )}
@@ -165,6 +205,8 @@ export const Mdata = () => {
             );
           })}
         </select>
+
+        <input type="text" id="korM" value={exMoney} style={styles.input} />
       </div>
     </>
   );

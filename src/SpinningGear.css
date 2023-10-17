@@ -1,0 +1,34 @@
+.gear-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.spinning-gear {
+  animation: spin 3s linear infinite;
+}
+
+.gear-icon {
+  font-size: 50px;
+  color: blue;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.dollar-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 30px;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
