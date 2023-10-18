@@ -3,3 +3,9 @@ from = '/trend_proxy/*'
 to = 'https://www.koreaexim.go.kr/:splat'
 status = 200
 force = true
+
+[[redirects]]
+from = '/chart_proxy/*'
+to = 'https://api.odcloud.kr/:splat'
+status = 200
+force = true

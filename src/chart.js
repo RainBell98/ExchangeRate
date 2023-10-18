@@ -23,10 +23,10 @@ const LineChart = ({ data }) => {
           {
             label: '환율',
             data: data.values,
-            borderColor: 'rgba(255, 99, 132, 1)', // 라인의 색상 변경
-            backgroundColor: 'rgba(255, 99, 132, 0.2)', // 라인 아래 영역의 배경색 변경
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderWidth: 2,
-            fill: true, // 라인 아래 영역을 채우도록 변경
+            fill: true,
           },
         ],
       },
@@ -43,7 +43,7 @@ const LineChart = ({ data }) => {
         },
       },
     });
-
+    console.log(data);
     return () => destroyChart();
   }, [data]);
 

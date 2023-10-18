@@ -72,7 +72,11 @@ export const CompareData = () => {
   };
   let yesDate = today.getDate() - 1;
   let preDate = today.getDate();
-
+  let isTime = true;
+  if (Number(today.getHours()) <= 11) {
+    isTime = false;
+  }
+  console.log(Number(today.getHours));
   if (today.getDay() == 0) {
     preDate -= 2;
     yesDate -= 3;
@@ -87,24 +91,30 @@ export const CompareData = () => {
   }${preDate}&data=AP01`;
   let trend_proxy = window.location.hostname === 'localhost' ? '' : 'trend_proxy';
   let yesApi = `/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${yesterday.year}${yesterday.month}${yesDate}&data=AP01`;
+
   useEffect(() => {
-    const dataInfo = async () => {
-      const preResult = await axios.get(`${trend_proxy}${preApi}`);
-      const yesResult = await axios.get(`${trend_proxy}${yesApi}`);
-      const preRes = await preResult.data;
-      const yesRes = await yesResult.data;
-      setPreOptionData(preRes);
-      setYesOptionData(yesRes);
-    };
-    dataInfo();
+    if (isTime === true) {
+      const dataInfo = async () => {
+        const preResult = await axios.get(`${trend_proxy}${preApi}`);
+        const yesResult = await axios.get(`${trend_proxy}${yesApi}`);
+        const preRes = await preResult.data;
+        const yesRes = await yesResult.data;
+        setPreOptionData(preRes);
+        setYesOptionData(yesRes);
+      };
+      dataInfo();
+    }
   }, []);
-  for (let i = 0; i < preOptionData.length; i++) {
-    let preR = preOptionData[i].tts.replace(',', '');
-    let yesR = yesOptionData[i].tts.replace(',', '');
-    let resR: number = +yesR - +preR;
-    let resU: number = (resR / +preR) * 100;
-    compare.push(+resR.toFixed(3));
-    rateData.push(+resU.toFixed(3));
+  console.log(isTime);
+  if (isTime) {
+    for (let i = 0; i < preOptionData.length; i++) {
+      let preR = preOptionData[i].tts.replace(',', '');
+      let yesR = yesOptionData[i].tts.replace(',', '');
+      let resR: number = +yesR - +preR;
+      let resU: number = (resR / +preR) * 100;
+      compare.push(+resR.toFixed(3));
+      rateData.push(+resU.toFixed(3));
+    }
   }
 
   return (
@@ -118,44 +128,48 @@ export const CompareData = () => {
             <th className="thead">등락률</th>
           </tr>
         </thead>
-        <tbody>
-          {preOptionData.map((value: any, idx: number) => {
-            return (
-              <tr>
-                <th>
-                  {value.cur_unit} {countryInfo[value.cur_unit]}
-                </th>
-                <td>{value.tts}</td>
-                {compare[idx] > 0 && (
-                  <td style={tdRColor}>
-                    <AiFillCaretUp />
-                    {compare[idx]}
-                  </td>
-                )}
-                {compare[idx] < 0 && (
-                  <td style={tdBColor}>
-                    <AiFillCaretDown></AiFillCaretDown>
-                    {compare[idx]}
-                  </td>
-                )}
-                {compare[idx] === 0 && <td>{compare[idx]}</td>}
-                {rateData[idx] > 0 && (
-                  <td style={tdRColor}>
-                    <AiFillCaretUp />
-                    {rateData[idx]}%
-                  </td>
-                )}
-                {rateData[idx] < 0 && (
-                  <td style={tdBColor}>
-                    <AiFillCaretDown />
-                    {rateData[idx]}%
-                  </td>
-                )}
-                {!rateData[idx] && <td>0</td>}
-              </tr>
-            );
-          })}
-        </tbody>
+        {isTime ? (
+          <tbody>
+            {preOptionData.map((value: any, idx: number) => {
+              return (
+                <tr>
+                  <th>
+                    {value.cur_unit} {countryInfo[value.cur_unit]}
+                  </th>
+                  <td>{value.tts}</td>
+                  {compare[idx] > 0 && (
+                    <td style={tdRColor}>
+                      <AiFillCaretUp />
+                      {compare[idx]}
+                    </td>
+                  )}
+                  {compare[idx] < 0 && (
+                    <td style={tdBColor}>
+                      <AiFillCaretDown></AiFillCaretDown>
+                      {compare[idx]}
+                    </td>
+                  )}
+                  {compare[idx] === 0 && <td>{compare[idx]}</td>}
+                  {rateData[idx] > 0 && (
+                    <td style={tdRColor}>
+                      <AiFillCaretUp />
+                      {rateData[idx]}%
+                    </td>
+                  )}
+                  {rateData[idx] < 0 && (
+                    <td style={tdBColor}>
+                      <AiFillCaretDown />
+                      {rateData[idx]}%
+                    </td>
+                  )}
+                  {!rateData[idx] && <td>0</td>}
+                </tr>
+              );
+            })}
+          </tbody>
+        ) : (
+          <h4>영업시간 아닙니다.</h4>
+        )}
       </table>
     </div>
   );
