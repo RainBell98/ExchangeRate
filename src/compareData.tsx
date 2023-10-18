@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
+
 const korea_key = process.env.REACT_APP_KOREA_KEY;
 const countryInfo: any = {
   AED: '아랍에미리트',
@@ -81,10 +82,10 @@ export const CompareData = () => {
   } else if (today.getDay() == 1) {
     yesDate -= 4;
   }
-  let preApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${today.getFullYear()}${
+  let preApi = `/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${today.getFullYear()}${
     today.getMonth() + 1
   }${preDate}&data=AP01`;
-  let yesApi = ` https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${yesterday.year}${yesterday.month}${yesDate}&data=AP01`;
+  let yesApi = `/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${yesterday.year}${yesterday.month}${yesDate}&data=AP01`;
   useEffect(() => {
     const dataInfo = async () => {
       const preResult = await axios.get(preApi);
