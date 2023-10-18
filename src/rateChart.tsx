@@ -67,10 +67,6 @@ export const RateChart = (props: any) => {
   const [pre, setPre] = useState<any>('');
   useEffect(() => {
     const chart = async () => {
-      if (props.country == pre) {
-        // setPre(props.country);
-        return;
-      }
       let res2016 = (await axios.get(ap2016)).data.data;
       let res2017 = (await axios.get(ap2017)).data.data;
       let res2018 = (await axios.get(ap2018)).data.data;
@@ -105,7 +101,6 @@ export const RateChart = (props: any) => {
       }
     };
     setPre(props.country);
-    console.log(pre);
     chart();
   }, [pre]);
   const chartData = {
