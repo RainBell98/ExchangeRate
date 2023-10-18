@@ -85,11 +85,12 @@ export const CompareData = () => {
   let preApi = `/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${today.getFullYear()}${
     today.getMonth() + 1
   }${preDate}&data=AP01`;
+  let trend_proxy = window.location.hostname === 'localhost' ? '' : 'trend_proxy';
   let yesApi = `/site/program/financial/exchangeJSON?authkey=${korea_key}&searchdate=${yesterday.year}${yesterday.month}${yesDate}&data=AP01`;
   useEffect(() => {
     const dataInfo = async () => {
-      const preResult = await axios.get(preApi);
-      const yesResult = await axios.get(yesApi);
+      const preResult = await axios.get(`${trend_proxy}${preApi}`);
+      const yesResult = await axios.get(`${trend_proxy}${yesApi}`);
       const preRes = await preResult.data;
       const yesRes = await yesResult.data;
       setPreOptionData(preRes);
