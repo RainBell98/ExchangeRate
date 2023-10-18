@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import LineChart from './chart';
 
 const chart_key = process.env.REACT_APP_CHART_KEY;
@@ -64,8 +64,13 @@ export const RateChart = (props: any) => {
   let ap2021 = `https://api.odcloud.kr/api/15014787/v1/uddi:7f57af11-77b2-48a0-8a08-c0b1bd1c0581?page=1&perPage=57&serviceKey=${chart_key}`;
   let ap2022 = `https://api.odcloud.kr/api/15014787/v1/uddi:604b46a4-081e-4bb6-8fc4-92e7d51a0fd5?page=1&perPage=58&serviceKey=${chart_key}`;
 
+  const [pre, setPre] = useState<any>('');
   useEffect(() => {
     const chart = async () => {
+      if (props.country == pre) {
+        // setPre(props.country);
+        return;
+      }
       let res2016 = (await axios.get(ap2016)).data.data;
       let res2017 = (await axios.get(ap2017)).data.data;
       let res2018 = (await axios.get(ap2018)).data.data;
@@ -86,8 +91,8 @@ export const RateChart = (props: any) => {
       res2020 = res2020.filter((item: any) => resBasic.includes(item.통화코드));
       res2021 = res2021.filter((item: any) => resBasic.includes(item.통화코드));
       res2022 = res2022.filter((item: any) => resBasic.includes(item.통화코드));
-      res2017 = filterObjectsWithoutCountryInfo(res2016, countryInfo);
-      res2018 = filterObjectsWithoutCountryInfo(res2016, countryInfo);
+      res2017 = filterObjectsWithoutCountryInfo(res2017, countryInfo);
+      res2018 = filterObjectsWithoutCountryInfo(res2018, countryInfo);
       const resData: any[] = [res2016, res2017, res2018, res2019, res2020, res2021, res2022];
 
       for (let index = 0; index < resData[0].length; index++) {
@@ -99,8 +104,10 @@ export const RateChart = (props: any) => {
         }
       }
     };
+    setPre(props.country);
+    console.log(pre);
     chart();
-  }, [props.country]);
+  }, [pre]);
   const chartData = {
     labels: [2016, 2017, 2018, 2019, 2020, 2021, 2022],
     values: totalData[props.country],

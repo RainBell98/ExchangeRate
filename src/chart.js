@@ -1,5 +1,3 @@
-// LineChart.js
-
 import React, { useEffect, useRef } from 'react';
 import { Chart } from 'chart.js/auto';
 
@@ -8,30 +6,27 @@ const LineChart = ({ data }) => {
   const chartInstance = useRef(null);
 
   useEffect(() => {
-    const ctx = chartRef.current.getContext('2d');
-
-    // 파괴 함수
     const destroyChart = () => {
       if (chartInstance.current) {
         chartInstance.current.destroy();
       }
     };
 
-    // 이전 차트 파괴
     destroyChart();
 
-    // 새로운 차트 생성
+    const ctx = chartRef.current.getContext('2d');
     chartInstance.current = new Chart(ctx, {
       type: 'line',
       data: {
         labels: data.labels,
         datasets: [
           {
-            label: 'Exchange Rate',
+            label: '환율',
             data: data.values,
-            borderColor: 'rgba(75, 192, 192, 1)',
+            borderColor: 'rgba(255, 99, 132, 1)', // 라인의 색상 변경
+            backgroundColor: 'rgba(255, 99, 132, 0.2)', // 라인 아래 영역의 배경색 변경
             borderWidth: 2,
-            fill: false,
+            fill: true, // 라인 아래 영역을 채우도록 변경
           },
         ],
       },
@@ -49,7 +44,6 @@ const LineChart = ({ data }) => {
       },
     });
 
-    // 컴포넌트가 언마운트될 때 차트 파괴
     return () => destroyChart();
   }, [data]);
 

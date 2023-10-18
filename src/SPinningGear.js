@@ -7,7 +7,7 @@ class SpinningGear extends React.Component {
     return (
       <>
         <div className="gear-container">
-          <FaCog className="spinning-gear" size={100} />
+          <FaCog className="spinning-gear" size={150} />
 
           <FaDollarSign className="dollar-icon" />
         </div>
