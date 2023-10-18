@@ -73,3 +73,9 @@ option:checked {
   background-color: #f1f1f1;
   color: #333;
 }
+@media screen and (max-width: 420px) {
+  .FirstBox {
+    display: block;
+    margin-left: 0;
+  }
+}
