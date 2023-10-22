@@ -197,9 +197,9 @@ export const Mdata = () => {
             <span>
               {money} {basic}
             </span>
-
+            <br />
             <span>=</span>
-
+            <br />
             <span>
               {exMoney} {unit}
             </span>
