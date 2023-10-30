@@ -1,46 +1,28 @@
-# Getting Started with Create React App
+# ExchangeRate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c07e01be-9b93-402a-9aed-efacf1235574/f788d1ba-3ac3-45f1-9b8b-8a37e6c026f9/Untitled.png)
 
-## Available Scripts
+## 📖 상세 내용
 
-In the project directory, you can run:
+**리액트와 타입스크립트로 진행한 첫번째 토이프로젝트입니다. 저를 포함한 많은 사람들은 환율 정보를 알아볼 때 구글이나 네이버로 검색하는 경우가 대부분입니다. 저는 그것이 불편하다고 느꼈고 그래서 환율 정보를 알아보는 사이트를 만들었습니다. 현재 환율 정보에 국한되어있는 것이 아닌 2016년부터 2022년까지의 환율을 그래프로 알아볼 수 있습니다. 환율과 같은 돈에 관한 정보에는 트렌드에 맞는 디자인이 아닌 딱딱한 디자인이 맞다고 생각이 위와 같이 만들었습니다.**
 
-### `npm start`
+## 📱담당 기능
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React와 TypeScript를 사용하여 구현
+- 세계 환율 API를 통해 실시간으로 환율 정보를 가져와서 보여주는 기능 구현
+- 세계 환율 API를 통해 과거의 환율 정보를 가져와 그래프로 보여주는 기능 구현
+- 세계 환율 API를 통해 어제의 환율과 금일 환율을 비교하여 전일 대비 등락률을 보여주는 기능 구현
+- 개인 토이 프로젝트로 진행되었으며, 혼자서 모든 작업을 수행
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🛠️ 사용 기술 및 라이브러리
 
-### `npm test`
+- React, TypeScript
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 💡 깨달은 점
 
-### `npm run build`
+- 세계 환율 API를 3군데에서 가져와서 쓴 결과 API에 대해 더 자세히 알게 되었고 rest api에 대해 익숙해졌다.
+- 대부분의 코드르 TypeScript로 작성하였고 React에 더 익숙한 나머지 TypeScript가 어려웠고 제약이 많지만 코드가 더 안정적이라는 것을 느낄 수 있었다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 💬 아쉬운 점
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 과거의 데이터를 가져오기 위해 각기 다른 API를 사용한 결과 다 조금씩 다른 정보를 제공하여서 정보의 정확성이 떨어졌다. 기능이 부족하다고 생각이 들어 이것저것 기능을 넣었는데 다음 프로젝트를 진행할 때에는 프로젝트 시작전에 설계를 정확히 하여 이런 일이 생기지 않게 조심해야겠다.
