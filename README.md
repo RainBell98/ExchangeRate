@@ -1,6 +1,6 @@
 # ExchangeRate
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/c07e01be-9b93-402a-9aed-efacf1235574/f788d1ba-3ac3-45f1-9b8b-8a37e6c026f9/Untitled.png)
+![image](https://github.com/RainBell98/ExchangeRate/assets/107784810/11945d76-8b3c-4cea-b9cd-67fa596254b9)
 
 ## 📖 상세 내용
 
